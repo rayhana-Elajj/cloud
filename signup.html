@@ -10,11 +10,18 @@
 <body>
   <h1>Créer un compte</h1>
   <form id="signup-form">
-    <label for="email">Email :</label>
+    <label for="signup-email">Email :</label>
     <input type="email" id="signup-email" required />
     <br>
-    <label for="password">Mot de passe :</label>
+    <label for="signup-password">Mot de passe :</label>
     <input type="password" id="signup-password" required />
+    <br>
+    <!-- Ajout du champ rôle -->
+    <label for="signup-role">Choisir un rôle :</label>
+    <select id="signup-role" required>
+      <option value="etudiant">Étudiant</option>
+      <option value="enseignant">Enseignant</option>
+    </select>
     <br>
     <button type="submit" id="signup-btn">S'inscrire</button>
   </form>
