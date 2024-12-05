@@ -19,23 +19,27 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // Gestion de la connexion
-const loginForm = document.getElementById("login-form");
-if (loginForm) {
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const role = document.getElementById("role").value; // Récupère le rôle sélectionné
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        alert("Connexion réussie !");
-        window.location.href = "home.html"; // Redirige vers une page principale
-      })
-      .catch((error) => {
-        document.getElementById("error-message").textContent = error.message;
-      });
-  });
-}
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      alert("Connexion réussie !");
+      // Redirection basée sur le rôle
+      if (role === "etudiant") {
+        window.location.href = "home.html"; // Page pour les étudiants
+      } else if (role === "enseignant") {
+        window.location.href = "home1.html"; // Page pour les enseignants
+      }
+    })
+    .catch((error) => {
+      document.getElementById("error-message").textContent = error.message;
+    });
+});
+
 
 // Gestion de l'inscription
 const signupForm = document.getElementById("signup-form");

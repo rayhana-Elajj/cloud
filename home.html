@@ -18,6 +18,7 @@
         <ul>
             <li><a href="#download">Télécharger un sujet</a></li>
             <li><a href="#submit">Soumettre votre travail</a></li>
+            <li><a href="#quiz">Quiz</a></li>
             <li><a href="#grades">Consulter vos notes</a></li>
         </ul>
     </nav>
@@ -28,7 +29,7 @@
         <section id="download">
             <h2>Télécharger un sujet</h2>
             <div class="file-container">
-                <p><strong>Sujet 1  :</strong> <a href="https://aws-s3-link/sujet1.pdf" target="_blank" class="upload-btn">Télécharger</a></p>
+                <p><strong>Sujet 1 :</strong> <a href="https://aws-s3-link/sujet1.pdf" target="_blank" class="upload-btn">Télécharger</a></p>
                 <p><strong>Sujet 2 :</strong> <a href="https://aws-s3-link/sujet2.pdf" target="_blank" class="upload-btn">Télécharger</a></p>
             </div>
         </section>
@@ -44,6 +45,30 @@
             </form>
         </section>
 
+        <!-- Quiz -->
+        <section id="quiz">
+            <h2>Quiz sur le Cloud</h2>
+            <form id="quiz-form">
+                <p>1. Que signifie SaaS ?</p>
+                <label><input type="radio" name="q1" value="0" required> Système automatisé et sécurisé</label><br>
+                <label><input type="radio" name="q1" value="1"> Software as a Service</label><br>
+                <label><input type="radio" name="q1" value="0"> Solution as a Storage</label><br>
+
+                <p>2. Quelle est une caractéristique clé du cloud computing ?</p>
+                <label><input type="radio" name="q2" value="1" required> Accès à la demande</label><br>
+                <label><input type="radio" name="q2" value="0"> Coûts élevés fixes</label><br>
+                <label><input type="radio" name="q2" value="0"> Maintenance locale obligatoire</label><br>
+
+                <p>3. Qu'est-ce qu'un avantage majeur du cloud ?</p>
+                <label><input type="radio" name="q3" value="0" required> Besoin de matériel spécifique</label><br>
+                <label><input type="radio" name="q3" value="1"> Scalabilité</label><br>
+                <label><input type="radio" name="q3" value="0"> Accès limité</label><br>
+
+                <button type="submit">Soumettre</button>
+                <p id="quiz-result"></p>
+            </form>
+        </section>
+
         <!-- Consulter vos notes -->
         <section id="grades">
             <h2>Consulter vos notes</h2>
@@ -55,7 +80,9 @@
                         <th>Remarque</th>
                     </tr>
                 </thead>
-                
+                <tbody id="grades-table">
+                    <!-- Notes dynamiques -->
+                </tbody>
             </table>
         </section>
     </main>
@@ -66,7 +93,6 @@
     </footer>
 
     <script>
-        
         // Déconnexion
         function logout() {
             alert("Vous êtes déconnecté.");
@@ -87,33 +113,52 @@
             }, 2000);
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
-    // Sélectionne tous les liens du menu et toutes les sections
-    const menuLinks = document.querySelectorAll('nav ul li a');
-    const sections = document.querySelectorAll('main section');
+        // Quiz
+        document.getElementById('quiz-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const answers = document.querySelectorAll('#quiz-form input[type="radio"]:checked');
+            let score = 0;
+            answers.forEach(answer => {
+                score += parseInt(answer.value, 10);
+            });
 
-    // Fonction pour cacher toutes les sections
-    function hideAllSections() {
-        sections.forEach(section => section.classList.add('hidden'));
-    }
+            // Affiche le résultat
+            document.getElementById('quiz-result').textContent = `Vous avez obtenu une note de ${score}/3.`;
 
-    // Ajoute un gestionnaire de clic pour chaque lien du menu
-    menuLinks.forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault(); // Empêche le comportement par défaut du lien
-            const targetId = this.getAttribute('href').substring(1); // Récupère l'ID cible
-            hideAllSections(); // Cache toutes les sections
-            document.getElementById(targetId).classList.remove('hidden'); // Montre la section cible
+            // Ajoute la note au tableau des notes
+            const gradesTable = document.getElementById('grades-table');
+            gradesTable.innerHTML = `
+                <tr>
+                    <td>Quiz sur le Cloud</td>
+                    <td>${score}/3</td>
+                    <td>${score === 3 ? 'Excellent' : score >= 2 ? 'Bien' : 'À améliorer'}</td>
+                </tr>
+            `;
         });
-    });
 
-    // Cache toutes les sections par défaut, sauf la première
-    hideAllSections();
-    if (sections.length > 0) {
-        sections[0].classList.remove('hidden');
-    }
-});
+        // Navigation dynamique
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuLinks = document.querySelectorAll('nav ul li a');
+            const sections = document.querySelectorAll('main section');
 
+            function hideAllSections() {
+                sections.forEach(section => section.classList.add('hidden'));
+            }
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    hideAllSections();
+                    document.getElementById(targetId).classList.remove('hidden');
+                });
+            });
+
+            hideAllSections();
+            if (sections.length > 0) {
+                sections[0].classList.remove('hidden');
+            }
+        });
     </script>
 </body>
 </html>
