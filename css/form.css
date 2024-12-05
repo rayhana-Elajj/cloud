@@ -1,0 +1,173 @@
+/* Corps de la page */
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 16px;
+  background: linear-gradient(135deg, #81C784, #96e0b3); /* Vert doux */
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 20px; /* Ajout d'un padding pour éviter les débordements sur petits écrans */
+}
+
+/* Titre principal */
+h1 {
+  font-size: 48px;
+  color: rgba(0, 0, 0, 0.1); /* Couleur discrète */
+  position: absolute;
+  top: 5%; /* Ajustement de la position */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1; /* Assure que le texte reste derrière */
+  pointer-events: none; /* Empêche les interactions */
+  margin: 0;
+  text-align: center;
+}
+
+/* Ajout d'un effet visuel si nécessaire */
+h1::before {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: rgba(5, 5, 5, 0.3); /* Contraste léger */
+  z-index: -1; /* Toujours derrière le formulaire */
+}
+
+
+/* Formulaire principal */
+form {
+  position: relative;
+  z-index: 2; /* Au premier plan */
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Effet d’apparition */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Styles des labels */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* Champs de texte */
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus {
+  border-color: #34d399;
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 211, 153, 0.5);
+}
+
+/* Style du sélecteur de rôle */
+select {
+  appearance: none; /* Supprime les styles par défaut du navigateur */
+  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2333b983"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+  background-size: 15px;
+}
+
+select:hover {
+  cursor: pointer;
+}
+
+/* Bouton de formulaire */
+button {
+  background: linear-gradient(135deg, #34d399, #10b981);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: 100%;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #0bbd82, #059669);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Phrase sous le formulaire */
+p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333; /* Couleur neutre pour le texte */
+}
+
+p a {
+  color: #10b981; /* Vert plus prononcé pour les liens */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+p a:hover {
+  text-decoration: underline;
+  color: #059669; /* Plus foncé au survol */
+}
+
+/* Message d'erreur */
+#error-message {
+  color: #d9534f;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+      font-size: 36px; /* Réduction de la taille sur les petits écrans */
+  }
+
+  form {
+      padding: 20px;
+  }
+
+  p {
+      font-size: 12px; /* Texte légèrement réduit */
+  }
+
+  input, select, button {
+      font-size: 14px;
+  }
+}

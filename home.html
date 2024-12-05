@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme Étudiant</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- En-tête -->
+    <header>
+        <h1>Plateforme Étudiant</h1>
+        <button class="logout" onclick="logout()">Déconnexion</button>
+    </header>
+
+    <!-- Menu -->
+    <nav>
+        <ul>
+            <li><a href="#download">Télécharger un sujet</a></li>
+            <li><a href="#submit">Soumettre votre travail</a></li>
+            <li><a href="#grades">Consulter vos notes</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main>
+        <!-- Télécharger un sujet -->
+        <section id="download">
+            <h2>Télécharger un sujet</h2>
+            <div class="file-container">
+                <p><strong>Sujet 1  :</strong> <a href="https://aws-s3-link/sujet1.pdf" target="_blank" class="upload-btn">Télécharger</a></p>
+                <p><strong>Sujet 2 :</strong> <a href="https://aws-s3-link/sujet2.pdf" target="_blank" class="upload-btn">Télécharger</a></p>
+            </div>
+        </section>
+
+        <!-- Soumettre votre travail -->
+        <section id="submit">
+            <h2>Soumettre votre travail</h2>
+            <form id="upload-form" enctype="multipart/form-data">
+                <label for="file">Choisissez votre fichier :</label>
+                <input type="file" id="file" name="file" required>
+                <button type="submit">Soumettre</button>
+                <p id="upload-status"></p>
+            </form>
+        </section>
+
+        <!-- Consulter vos notes -->
+        <section id="grades">
+            <h2>Consulter vos notes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matière</th>
+                        <th>Note</th>
+                        <th>Remarque</th>
+                    </tr>
+                </thead>
+                
+            </table>
+        </section>
+    </main>
+
+    <!-- Pied de page -->
+    <footer>
+        <p>&copy; 2024 Plateforme Étudiant</p>
+    </footer>
+
+    <script>
+        
+        // Déconnexion
+        function logout() {
+            alert("Vous êtes déconnecté.");
+            window.location.href = "index.html";
+        }
+
+        // Soumission du fichier
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('file');
+            if (fileInput.files.length === 0) {
+                alert("Veuillez choisir un fichier à soumettre.");
+                return;
+            }
+            document.getElementById('upload-status').textContent = "Envoi en cours...";
+            setTimeout(() => {
+                document.getElementById('upload-status').textContent = "Fichier soumis avec succès.";
+            }, 2000);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+    // Sélectionne tous les liens du menu et toutes les sections
+    const menuLinks = document.querySelectorAll('nav ul li a');
+    const sections = document.querySelectorAll('main section');
+
+    // Fonction pour cacher toutes les sections
+    function hideAllSections() {
+        sections.forEach(section => section.classList.add('hidden'));
+    }
+
+    // Ajoute un gestionnaire de clic pour chaque lien du menu
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+            const targetId = this.getAttribute('href').substring(1); // Récupère l'ID cible
+            hideAllSections(); // Cache toutes les sections
+            document.getElementById(targetId).classList.remove('hidden'); // Montre la section cible
+        });
+    });
+
+    // Cache toutes les sections par défaut, sauf la première
+    hideAllSections();
+    if (sections.length > 0) {
+        sections[0].classList.remove('hidden');
+    }
+});
+
+    </script>
+</body>
+</html>

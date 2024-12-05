@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme Enseignant</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Plateforme Enseignant</h1>
+        <button class="logout" onclick="logout()">Déconnexion</button>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#create-exam">Créer un examen</a></li>
+            <li><a href="#evaluation">Évaluation et surveillance</a></li>
+            <li><a href="#grades">Remise des notes</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="create-exam">
+            <h2>Créer un examen</h2>
+            <form id="exam-form" enctype="multipart/form-data">
+                <label for="exam-title">Titre de l'examen :</label>
+                <input type="text" id="exam-title" name="exam-title" required>
+                <label for="exam-file">Fichier de l'examen :</label>
+                <input type="file" id="exam-file" name="exam-file" required>
+                <button type="submit">Créer</button>
+                <p id="exam-status"></p>
+            </form>
+        </section>
+
+        <section id="evaluation">
+            <h2>Évaluation et surveillance</h2>
+            <p>Intégration d'outils pour surveiller les étudiants en temps réel.</p>
+            <button onclick="startSurveillance()">Commencer la surveillance</button>
+            <p id="surveillance-status">Aucune surveillance en cours.</p>
+        </section>
+
+        <section id="grades">
+            <h2>Remise des notes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Étudiant</th>
+                        <th>Examen</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Les données des notes -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Plateforme Enseignant</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuLinks = document.querySelectorAll('nav ul li a');
+            const sections = document.querySelectorAll('main section');
+
+            function hideAllSections() {
+                sections.forEach(section => section.classList.add('hidden'));
+            }
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    hideAllSections();
+                    document.getElementById(targetId).classList.remove('hidden');
+                });
+            });
+
+            hideAllSections();
+            if (sections.length > 0) {
+                sections[0].classList.remove('hidden');
+            }
+        });
+
+        function logout() {
+            alert("Vous êtes déconnecté.");
+            window.location.href = "index.html";
+        }
+
+        function startSurveillance() {
+            document.getElementById('surveillance-status').textContent = "Surveillance en cours...";
+            setTimeout(() => {
+                document.getElementById('surveillance-status').textContent = "Aucune anomalie détectée.";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
